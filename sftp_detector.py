@@ -1,20 +1,21 @@
+import pysftp
+import time
+import logging
+import sendgrid
+from sendgrid.helpers.mail import Mail, Email, To, Content
+sendgrid_api_key = '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'
+logging.basicConfig(filename='sftp.log', format='%(asctime)s - %(message)s', level=logging.INFO)
+logging.info('This will get logged to a file')
 
-def send_alert_email(subject='message parse HL7 alert'):    
+def send_alert_email(subject='Sftp_detector alert'):    
     ret=False
-    env_variables=get_env_variables()
-    if not env_variables:
-        msg='------------------failed to load env_variables in send_alert_email'
-        print(msg)
-        logging.info(msg)
-        return
         
-    sendgrid_api_key=env_variables['sendgrid_api_key']
     sg = sendgrid.SendGridAPIClient(api_key=sendgrid_api_key)
 
     from_email = Email('chen@kongdigital.com')  # Change to your verified sender
     to_email = To("snsengine@gmail.com")  # Change to your recipient
     subject = 'message alert: '+subject
-    content = Content("text/html", "<p>The key program:" + subject + " was NOT running just now,we re-run it. you may check</p>\
+    content = Content("text/html", "<p>The key program:" + subject + " was NOT running just now,please check sftp 51.210.155.58</p>\
                                   <p>The Gpace Team</p>")
     try:
         mail = Mail(from_email, to_email, subject, content)
@@ -83,4 +84,20 @@ def upload_sftp_windows(input_file_path,domain='51.210.155.58',port=22,username=
         send_alert_email(msg)
         
     return ret
+
+def test_sftp():
+    input_file_path='test.txt'
+    upload_sftp_windows(input_file_path)
+
+if __name__ == "__main__":
+
+    try:
+        print("test_sftp...")
+        test_sftp()
+        time.sleep(600) 
+    except Exception as e:
+        msg="------------------test_sftp stopped."
+        print(msg)
+        logging.info(msg)
+        logging.info(e)
 

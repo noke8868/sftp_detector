@@ -3,7 +3,7 @@ import time
 import logging
 import sendgrid
 from sendgrid.helpers.mail import Mail, Email, To, Content
-sendgrid_api_key = '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'
+sendgrid_api_key = 'xxx'
 logging.basicConfig(filename='sftp.log', format='%(asctime)s - %(message)s', level=logging.INFO)
 logging.info('This will get logged to a file')
 

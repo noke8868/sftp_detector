@@ -44,7 +44,7 @@ def send_alert_email(subject='Sftp_detector alert'):
     return ret
 
 
-def upload_sftp_windows(input_file_path,domain='51.210.155.58',port=22,username='1016',password='xY317086!!'):
+def upload_sftp_windows(input_file_path,domain='',port=22,username='',password=''):
     ret=False
    
     #pip uninstall pysftp && pip install pysftp==0.2.8
